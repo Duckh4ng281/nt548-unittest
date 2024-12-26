@@ -1,0 +1,12 @@
+{
+  "name": "ticketselling",
+  "version": "1.0.0",
+  "description": "Đây là repository của ứng dụng microservices Ticket selling. Mục đích là demo các tính năng của Kubernetes phục vụ đồ án môn học Quản trị mạng và hệ thống.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
