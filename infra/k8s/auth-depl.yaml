@@ -14,7 +14,12 @@ spec:
     spec:
       containers:
         - name: auth
-          image: us.gcr.io/t-system-422014-h3/auth
+          image: 381492301125.dkr.ecr.ap-southeast-1.amazonaws.com/auth:1.0.0
+          volumeMounts:
+            - name: aws-credentials-vl
+              mountPath: /root/.aws/credentials
+              subPath: credentials
+              readOnly: true        
           env:
             - name: MONGO_URI
               value: 'mongodb://auth-mongo-srv:27017/auth'
@@ -23,6 +28,12 @@ spec:
                 secretKeyRef:
                   name: jwt-secret
                   key: JWT_KEY
+      volumes:
+        - name: aws-credentials-vl
+          secret:
+            secretName: aws-secret
+      imagePullSecrets:
+        - name: ecr-secret
 ---
 apiVersion: v1
 kind: Service

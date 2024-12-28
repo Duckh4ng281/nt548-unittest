@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mongodb-pvc-tickets
 spec:
-  storageClassName: premium-rwo
+  storageClassName: gp2
   resources:
     requests:
       storage: 100Mi

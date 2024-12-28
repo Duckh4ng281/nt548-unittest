@@ -2,46 +2,50 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
+  namespace: default  # Match the namespace of your backend services
   annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/use-regex: 'true'
+    kubernetes.io/ingress.class: alb                          # Use ALB for the AWS Load Balancer Controller
+    alb.ingress.kubernetes.io/scheme: internet-facing         # Specify an internet-facing load balancer
+    alb.ingress.kubernetes.io/target-type: ip                 # Use IP as the target type for EKS
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'  # Configure the ALB to listen on port 80
+    alb.ingress.kubernetes.io/backend-protocol: HTTP          # Use HTTP for backend communication
 spec:
   rules:
-    - host: ticketselling-demo.dev
+    - host: ticketselling-demo.dev                            # Replace with your domain
       http:
         paths:
-          - path: /api/payments/?(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: payments-srv
-                port:
-                  number: 3000
-          - path: /api/users/?(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: auth-srv
-                port:
-                  number: 3000
-          - path: /api/tickets/?(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: tickets-srv
-                port:
-                  number: 3000
-          - path: /api/orders/?(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: orders-srv
-                port:
-                  number: 3000
-          - path: /?(.*)
-            pathType: ImplementationSpecific
-            backend:
-              service:
-                name: client-srv
-                port:
-                  number: 3000
+        - path: /api/payments
+          pathType: Prefix
+          backend:
+            service:
+              name: payments-srv                              # Service name for /api/payments
+              port:
+                number: 3000
+        - path: /api/users
+          pathType: Prefix
+          backend:
+            service:
+              name: auth-srv                                  # Service name for /api/users
+              port:
+                number: 3000
+        - path: /api/tickets
+          pathType: Prefix
+          backend:
+            service:
+              name: tickets-srv                               # Service name for /api/tickets
+              port:
+                number: 3000
+        - path: /api/orders
+          pathType: Prefix
+          backend:
+            service:
+              name: orders-srv                                # Service name for /api/orders
+              port:
+                number: 3000
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: client-srv                                # Service name for /
+              port:
+                number: 3000

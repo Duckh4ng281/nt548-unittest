@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: orders
-          image: us.gcr.io/t-system-422014-h3/orders
+          image: 381492301125.dkr.ecr.ap-southeast-1.amazonaws.com/orders:1.0.0
           env:
             - name: NATS_CLIENT_ID
               valueFrom:

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: payments
-          image: us.gcr.io/t-system-422014-h3/payments
+          image: 381492301125.dkr.ecr.ap-southeast-1.amazonaws.com/payments:1.0.0
           env:
             - name: NATS_CLIENT_ID
               valueFrom:
