@@ -1,15 +1,17 @@
 {
     "Version": "2012-10-17",
     "Statement": [
-      {
-        "Effect": "Allow",
-        "Principal": {
-          "Service": "pods.eks.amazonaws.com"
-        },
-        "Action": [
-          "sts:AssumeRole",
-          "sts:TagSession"
-        ]
-      }
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::381492301125:oidc-provider/oidc.eks.ap-southeast-1.amazonaws.com/id/DB6C091FF8170C71144306CD9051DC98"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.ap-southeast-1.amazonaws.com/id/DB6C091FF8170C71144306CD9051DC98:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
+                }
+            }
+        }
     ]
-  }
+}
